@@ -3,7 +3,7 @@
 
 name: 'Build Iris rev 7'
 on:
-  - workflow_dispatch
+  - push
 jobs:
   build:
     uses: ./.github/workflows/main.yml
