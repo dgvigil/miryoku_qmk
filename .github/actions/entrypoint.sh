@@ -15,20 +15,7 @@ git config --global --add safe.directory '*'
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git fetch --unshallow
-# revert=`git log --grep='^\[miryoku-github\]' --pretty='format:%H' | tr '\n' ' '`
-# git revert $revert
-for merge in ${{ matrix.merge }}
-do
-    user=`echo "$merge" | cut -f 1 -d '/'`
-    repo=`echo "$merge" | cut -f 2 -d '/'`
-    branch=`echo "$merge" | cut -f 3- -d '/'`
-    remote="$user-$repo"
-    git remote add "$remote" "https://github.com/$user/$repo.git"
-    git fetch "$remote" "$branch"
-    git merge "$remote/$branch"
-    git remote remove "$remote"
-    git status
-done
+
 
 cd miryoku_qmk || exit 1
 git config --global --add safe.directory '*'
