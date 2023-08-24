@@ -15,8 +15,8 @@ git config --global --add safe.directory '*'
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git fetch --unshallow
-revert=`git log --grep='^\[miryoku-github\]' --pretty='format:%H' | tr '\n' ' '`
-git revert $revert
+# revert=`git log --grep='^\[miryoku-github\]' --pretty='format:%H' | tr '\n' ' '`
+# git revert $revert
 for merge in ${{ matrix.merge }}
 do
     user=`echo "$merge" | cut -f 1 -d '/'`
