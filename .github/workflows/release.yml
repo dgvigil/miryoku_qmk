@@ -25,26 +25,21 @@ jobs:
       - name: Setup and Build
         continue-on-error: true
         run: |
-          mkdir ~/miryoku_qmk
-          export QMK_HOME='~/miryoku_qmk'
           pip install milc
           python3 -m pip install --user qmk
           qmk setup -y
-          ls ~/miryoku_qmk
-          cp -r ~/work/miryoku_qmk/miryoku_qmk ~/miryoku_qmk/
           for t in keebio/iris/rev7 ferris/sweep;
             do echo "Building QMK for $t";
             qmk compile -j 2 -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
           done
 
+          mkdir ~/compiled/firmware
+          find ~/ -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
+
+
       - name: Set Release Date
         run: |
           echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
-
-      - name: Prepare assets
-        run: |
-          mkdir ~/miryoku_qmk/firmware
-          find ~/ -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/miryoku_qmk/firmware \;
 
       - name: Create GitHub release
         uses: marvinpinto/action-automatic-releases@latest
@@ -54,4 +49,4 @@ jobs:
           title: ${{ env.ReleaseVersion }}
           prerelease: false
           files: |
-            ~/miryoku_qmk/firmware/*.hex
+            ~/compiled/firmware/*.hex
