@@ -37,12 +37,6 @@ jobs:
             qmk compile -j 2 -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
           done
 
-      - name: Copy assets to Repo
-        run: |
-          find ~/ -maxdepth 1 -name "*.hex" -exec \cp '{}' $GITHUB_WORKSPACE \;
-          find ~/ -maxdepth 1 -name "*.bin" -exec \cp '{}' $GITHUB_WORKSPACE \;
-          ls $GITHUB_WORKSPACE
-
       - name: Set Release Date
         run: |
           echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
@@ -50,9 +44,7 @@ jobs:
       - name: Prepare assets
         run: |
           mkdir ~/miryoku_qmk/firmware
-          find ~/ -maxdepth 1 -name "*.hex" -exec mv '{}' ~/miryoku_qmk/firmware \;
-          find ~/ -maxdepth 1 -name "*.bin" -exec mv '{}' ~/miryoku_qmk/firmware \;
-
+          find ~/ -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/miryoku_qmk/firmware \;
 
       - name: Create GitHub release
         uses: marvinpinto/action-automatic-releases@latest
@@ -62,4 +54,4 @@ jobs:
           title: ${{ env.ReleaseVersion }}
           prerelease: false
           files: |
-            /home/runner/miryoku_qmk/firmware/*
+            ~/miryoku_qmk/firmware/*.hex
