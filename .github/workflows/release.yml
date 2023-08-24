@@ -37,7 +37,7 @@ jobs:
           python3 -m pip install --user qmk
           qmk setup -y
           ls ~/miryoku_qmk
-          cp -r ~/work/qmk-config/qmk-config/keyboards ~/miryoku_qmk/
+          cp -r ~/work/miryoku_qmk/miryoku_qmk ~/miryoku_qmk/
           for t in keebio/iris/rev7 ferris/sweep;
             do echo "Building QMK for $t";
             qmk compile -j 2 -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
