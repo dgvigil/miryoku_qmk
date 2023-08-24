@@ -33,7 +33,7 @@ jobs:
             qmk compile -j 2 -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
           done
 
-          mkdir ~/compiled/firmware
+          mkdir -p ~/compiled/firmware
           find ~/ -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
 
 
