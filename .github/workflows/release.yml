@@ -22,16 +22,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Fix 402 error
-      - name: remove git-lfs
-        continue-on-error: true
-        shell: bash
-        run: |
-          sudo rm /etc/apt/sources.list.d/github_git-lfs.list
-
       - name: Setup and Build
         continue-on-error: true
         run: |
+          mkdir ~/miryoku_qmk
           export QMK_HOME='~/miryoku_qmk'
           pip install milc
           python3 -m pip install --user qmk
