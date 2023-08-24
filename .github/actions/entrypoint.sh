@@ -14,7 +14,8 @@ append_githash_info () {
 git config --global --add safe.directory '*'
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-git fetch --unshallow
+
+git clone --no-checkout https://github.com/dgvigil/miryoku_qmk
 
 
 cd miryoku_qmk || exit 1
