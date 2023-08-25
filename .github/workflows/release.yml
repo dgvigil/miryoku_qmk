@@ -25,7 +25,6 @@ jobs:
       - name: Setup and Build
         continue-on-error: true
         run: |
-          set -ex
           pip install milc
           python3 -m pip install --user qmk
           qmk setup -y
@@ -33,11 +32,9 @@ jobs:
             do echo "Building QMK for $t";
             qmk compile -j 2 -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
           done
-          pwd
-          ls -lah
-          find ~//work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex"
+          find ~/work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex"
           mkdir -p ~/compiled/firmware
-          find ~//work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
+          find ~/work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
 
 
       - name: Set Release Date
@@ -52,4 +49,4 @@ jobs:
           title: ${{ env.ReleaseVersion }}
           prerelease: false
           files: |
-            ~/compiled/firmware/*.hex
+            /home/runner/compiled/firmware/*.hex
