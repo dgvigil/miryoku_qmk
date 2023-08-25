@@ -35,9 +35,9 @@ jobs:
           done
           pwd
           ls -lah
-          find ~/ -maxdepth 1 -name "*.hex"
+          find ~//work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex"
           mkdir -p ~/compiled/firmware
-          find ~/ -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
+          find ~//work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
 
 
       - name: Set Release Date
