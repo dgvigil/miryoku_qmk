@@ -33,6 +33,8 @@ jobs:
             do echo "Building QMK for $t";
             qmk compile -j 2 -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
           done
+          pwd
+          ls -lah
           find ~/ -maxdepth 1 -name "*.hex"
           mkdir -p ~/compiled/firmware
           find ~/ -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
