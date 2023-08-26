@@ -1,9 +1,6 @@
 # Copyright 2019 Manna Harbour
 # https://github.com/manna-harbour/miryoku
 
-EXTRAFLAGS += -flto
-
-
 MOUSEKEY_ENABLE = yes
 EXTRAKEY_ENABLE = yes
 AUTO_SHIFT_ENABLE = yes

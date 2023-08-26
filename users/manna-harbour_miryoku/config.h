@@ -7,9 +7,6 @@
 
 #include "custom_config.h"
 
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
-
 // default but used in macros
 #undef TAPPING_TERM
 #define TAPPING_TERM 200
