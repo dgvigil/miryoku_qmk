@@ -2,42 +2,40 @@ name: Generate Firmwares
 
 on:
   push:
-  # schedule:
-  #  - cron: "0 12 * * *"
   workflow_dispatch:
 
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v2
+            - uses: actions/checkout@v2
 
-        - name: Setup and Build
-            run: |
-            python3 -m pip install --user qmk
-            qmk setup -y
-            for t in keebio/iris/rev7 ferris/sweep;
-                do echo "Building QMK for $t";
-                qmk compile -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
-            done
-            for t in keebio/iris/rev7 ferris/sweep;
-                do echo "Building QMK for $t";
-                qmk compile -kb $t -km via
-            done
-            find ~/work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex"
-            mkdir -p ~/compiled/firmware
-            find ~/work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
+            - name: Setup and Build
+              run: |
+                    python3 -m pip install --user qmk
+                    qmk setup -y
+                    for t in keebio/iris/rev7 ferris/sweep;
+                        do echo "Building QMK for $t";
+                        qmk compile -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
+                    done
+                    for t in keebio/iris/rev7 ferris/sweep;
+                        do echo "Building QMK for $t";
+                        qmk compile -kb $t -km via
+                    done
+                    find ~/work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex"
+                    mkdir -p ~/compiled/firmware
+                    find ~/work/miryoku_qmk/miryoku_qmk -maxdepth 1 -name "*.hex" -exec mv -v '{}' ~/compiled/firmware \;
 
-        - name: Set Release Date
-            run: |
-            echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
+            - name: Set Release Date
+              run: |
+                echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
 
-        - name: Create GitHub release
-            uses: marvinpinto/action-automatic-releases@latest
-            with:
-            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-            automatic_release_tag: "${{env.RELEASE_DATE}}"
-            title: ${{ env.ReleaseVersion }}
-            prerelease: false
-            files: |
-                /home/runner/compiled/firmware/*.hex
+            - name: Create GitHub release
+              uses: marvinpinto/action-automatic-releases@latest
+              with:
+                repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                automatic_release_tag: "${{env.RELEASE_DATE}}"
+                title: ${{ env.ReleaseVersion }}
+                prerelease: false
+                files: |
+                    /home/runner/compiled/firmware/*.hex
