@@ -1,4 +1,4 @@
-name: Generate Firmwares
+name: Generate Firmware for dgvigil's keebs
 
 on:
   push:
@@ -10,10 +10,13 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - name: Setup and Build
+            - name: Setup
               run: |
                     python3 -m pip install --user qmk
                     qmk setup -y
+
+            - name: Build
+              run: |
                     for t in keebio/iris/rev7 ferris/sweep;
                         do echo "Building QMK for $t";
                         qmk compile -kb $t -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=COLEMAKDH
