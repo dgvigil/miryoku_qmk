@@ -2,3 +2,4 @@
 # https://github.com/manna-harbour/miryoku
 
 CONSOLE_ENABLE = no
+AUDIO_ENABLE = no
