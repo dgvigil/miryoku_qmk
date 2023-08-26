@@ -38,10 +38,12 @@ jobs:
 
 
       - name: Set Release Date
+        needs: build
         run: |
           echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
 
       - name: Create GitHub release
+        needs: build
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
